@@ -3,17 +3,17 @@
 #Provision 
 
 echo "update..."
-sudo apt-get update
+sudo DEBIAN_FRONTEND=noninteractive apt-get update
 echo "update done"
 echo
 
 echo "upgrade..."
-sudo apt upgrade -y
+sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
 echo "upgrade done"
 echo
 
 echo "install ngnix..."
-sudo apt install nginx -y
+sudo DEBIAN_FRONTEND=noninteractive apt install nginx -y
 echo "nginx install complete"
 echo
 
@@ -34,5 +34,5 @@ echo "npm install complete"
 echo
 
 #start npm
-npm start
+npm start &
 
