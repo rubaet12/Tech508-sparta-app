@@ -32,7 +32,16 @@ echo "installing npm..."
 npm install
 echo "npm install complete"
 echo
-
+echo " Checking if anything is already using port 3000..."
+PID=$(sudo lsof -t -i:3000 || true)
+if [ -n "$PID" ]; then
+  echo " Port 3000 is in use by PID $PID. Killing..."
+  sudo kill $PID
+  echo " Port 3000 cleared."
+else
+  echo " Port 3000 is free."
+fi
+echo
 #start npm
 npm start &
 
