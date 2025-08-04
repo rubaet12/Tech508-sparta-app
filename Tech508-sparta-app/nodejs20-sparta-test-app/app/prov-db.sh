@@ -14,8 +14,7 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install gnupg curl
 
 echo "import public key"
 curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | \
-   sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg \
-   --dearmor
+gpg --dearmor | sudo tee /usr/share/keyrings/mongodb-server-7.0.gpg > /dev/null
 echo "imported public key"
 echo
 
