@@ -34,3 +34,26 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
    mongodb-org-mongos=7.0.22 \
    mongodb-org-tools=7.0.22 \
    mongodb-org-database-tools-extra=7.0.22
+
+   echo 
+echo " Configuring MongoDB to Allow External Connections"
+echo 
+
+# Backup existing config
+sudo cp /etc/mongod.conf /etc/mongod.conf.bk
+
+# Update bindIp to 0.0.0.0
+sudo sed -i 's/bindIp: 127.0.0.1/bindIp: 0.0.0.0/' /etc/mongod.conf
+echo "bindIp updated to 0.0.0.0"
+echo
+
+echo 
+echo " Starting MongoDB..."
+echo 
+sudo systemctl start mongod
+sudo systemctl enable mongod
+
+echo
+echo 
+echo " MongoDB provisioned and running "
+echo 
