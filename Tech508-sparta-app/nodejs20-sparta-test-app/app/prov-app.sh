@@ -17,6 +17,20 @@ sudo DEBIAN_FRONTEND=noninteractive apt install nginx -y
 echo "nginx install complete"
 echo
 
+# Configure Nginx as reverse proxy
+echo "Configuring Nginx reverse proxy..."
+
+# Backup default config
+sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
+
+# Replace try_files line with proxy_pass
+sudo sed -i 's|try_files.*|proxy_pass http://localhost:3000;|' /etc/nginx/sites-available/default
+
+# Restart nginx to apply changes
+sudo systemctl restart nginx
+echo "Nginx reverse proxy configured and restarted"
+echo
+
 echo "install node.js..."
 sudo DEBIAN_FRONTEND=noninteractive bash -c "curl -fsSL https://deb.nodesource.com/setup_20.x | bash -" && \
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs
@@ -54,16 +68,4 @@ echo
 # Start app in background
 npm start &
 
-# Configure Nginx as reverse proxy
-echo "Configuring Nginx reverse proxy..."
 
-# Backup default config
-sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
-
-# Replace try_files line with proxy_pass
-sudo sed -i 's|try_files.*|proxy_pass http://localhost:3000;|' /etc/nginx/sites-available/default
-
-# Restart nginx to apply changes
-sudo systemctl restart nginx
-echo "Nginx reverse proxy configured and restarted"
-echo
